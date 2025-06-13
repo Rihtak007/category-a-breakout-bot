@@ -5,8 +5,8 @@ import requests
 app = Flask(__name__)
 
 # Get Telegram credentials from environment
-BOT_TOKEN = os.environ.get("7794145234:AAGTiTtmppgfHfMZk4atX6KR9gO7c2Vaoxg")
-CHAT_ID = os.environ.get("5410947715")
+BOT_TOKEN = os.environ.get("BOT_TOKEN")
+CHAT_ID = os.environ.get("CHAT_ID")
 
 @app.route('/')
 def home():
