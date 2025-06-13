@@ -1,11 +1,13 @@
+from flask import Flask
 import requests
 import os
+
+app = Flask(__name__)
 
 # --- ENV VARIABLES ---
 BOT_TOKEN = os.environ.get("7794145234:AAGTiTtmppgfHfMZk4atX6KR9gO7c2Vaoxg")
 CHAT_ID = os.environ.get("5410947715")
 
-# --- Send Telegram Message Function ---
 def send_telegram_message(message: str):
     url = f"https://api.telegram.org/bot{BOT_TOKEN}/sendMessage"
     payload = {
@@ -14,9 +16,8 @@ def send_telegram_message(message: str):
         "parse_mode": "Markdown"
     }
     response = requests.post(url, data=payload)
-    print("Telegram response:", response.text)
+    return response.text
 
-# --- Format Trade Message ---
 def format_trade_message(stock, entry, t1, t2, t3, sl, rr_ratio):
     return (
         f"🚀 *Breakout Alert* 🚀\n\n"
@@ -32,19 +33,22 @@ def format_trade_message(stock, entry, t1, t2, t3, sl, rr_ratio):
         f"*Auto Exit:* 3:15 PM if no SL or target is hit"
     )
 
-# --- Simulated Best Trade (Replace with real logic) ---
-best_trade = {
-    "stock": "JUBLFOODS",
-    "entry": 520,
-    "t1": 530,
-    "t2": 540,
-    "t3": 555,
-    "sl": 505,
-    "rr": "1:2.5"
-}
+@app.route('/')
+def home():
+    return 'Bot is live!'
 
-# --- Format and Send ---
-if BOT_TOKEN and CHAT_ID:
+@app.route('/send')
+def trigger_bot():
+    best_trade = {
+        "stock": "JUBLFOODS",
+        "entry": 520,
+        "t1": 530,
+        "t2": 540,
+        "t3": 555,
+        "sl": 505,
+        "rr": "1:2.5"
+    }
+
     message = format_trade_message(
         best_trade["stock"],
         best_trade["entry"],
@@ -54,6 +58,8 @@ if BOT_TOKEN and CHAT_ID:
         best_trade["sl"],
         best_trade["rr"]
     )
-    send_telegram_message(message)
-else:
-    print("Bot token or chat ID not set!")
+    result = send_telegram_message(message)
+    return f"Message sent: {result}"
+
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=10000)
