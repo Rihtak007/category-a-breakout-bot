@@ -11,7 +11,7 @@ CHAT_ID = os.environ.get("5410947715")
 def send_telegram_message(message: str):
     url = f"https://api.telegram.org/bot{BOT_TOKEN}/sendMessage"
     payload = {
-        "chat_id": CHAT_ID,
+        "chat_id": 5410947715,
         "text": message,
         "parse_mode": "Markdown"
     }
