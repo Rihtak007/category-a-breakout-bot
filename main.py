@@ -1,8 +1,4 @@
-from flask import Flask
-import requests
 import os
-
-app = Flask(__name__)
 
 # --- ENV VARIABLES ---
 BOT_TOKEN = os.environ.get("7794145234:AAGTiTtmppgfHfMZk4atX6KR9gO7c2Vaoxg")
