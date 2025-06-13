@@ -4,9 +4,9 @@ import requests
 
 app = Flask(__name__)
 
-# Get Telegram credentials from environment
+# ✅ Correct way to get env variables by name
 BOT_TOKEN = os.environ.get("BOT_TOKEN")
-CHAT_ID = os.environ.get("CHAT_ID")
+CHAT_ID = os.environ.get("TELEGRAM_USER_ID")
 
 @app.route('/')
 def home():
@@ -30,7 +30,3 @@ def send():
         return f"✅ Message sent! Status: {r.status_code}"
     except Exception as e:
         return f"❌ Failed to send message: {str(e)}"
-
-# Don't include if using gunicorn in Render
-# if __name__ == "__main__":
-#     app.run(host="0.0.0.0", port=10000)
