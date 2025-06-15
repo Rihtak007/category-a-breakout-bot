@@ -1,5 +1,5 @@
 from flask import Flask, request
-from trade_logic import select_best_trade
+from trade_logic import get_trade_signal
 from utils import send_telegram_message
 import os
 
